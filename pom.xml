@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.knowshare.enterprise</groupId>
   <artifactId>KS-Gamification</artifactId>
-  <version>0.0.4</version>
+  <version>1.0.0</version>
   
   <parent>
 		<groupId>org.springframework.boot</groupId>
@@ -13,7 +13,7 @@
 
   <properties>
 		<java.version>1.8</java.version>
-		<knowshare.version>0.0.4</knowshare.version>
+		<knowshare.version>1.0.0</knowshare.version>
   </properties>
   
   <dependencies>
@@ -34,6 +34,10 @@
 			<groupId>com.knowshare.enterprise</groupId>
 			<artifactId>KS-Enterprise</artifactId>
 			<version>${knowshare.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-aop</artifactId>
 		</dependency>
   </dependencies>
 </project>
