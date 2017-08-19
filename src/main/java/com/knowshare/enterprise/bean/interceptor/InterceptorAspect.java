@@ -26,6 +26,8 @@ public class InterceptorAspect {
 	
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	
+	private static final String DEBUG_MSG = "KS-Gamification Interceptando método {}";
+	
 	@Autowired
 	private InsigniasFacade insigniasBean;
 
@@ -33,8 +35,55 @@ public class InterceptorAspect {
 			pointcut="execution(* com.knowshare.enterprise.bean.idea.IdeaModBean.crearIdea(..))",
 			returning="result")
 	public void afterCrearIdea(JoinPoint joinPoint,Object result){
-		logger.info("KS-Gamification Interceptando método {}",joinPoint.getSignature().getName());
+		logger.info(DEBUG_MSG,joinPoint.getSignature().getName());
 		if(null != result)
-			insigniasBean.insigniasIdea((IdeaDTO)result);
+			insigniasBean.insigniasCreacionIdea((IdeaDTO)result);
+	}
+	
+	@AfterReturning(
+			pointcut="execution(* com.knowshare.enterprise.bean.usuario.UsuarioModBean.seguir(..))",
+			returning="result")
+	public void afterSeguir(JoinPoint joinPoint,Object result){
+		logger.info(DEBUG_MSG,joinPoint.getSignature().getName());
+		if((boolean)result)
+			insigniasBean.insigniasSeguir((String)joinPoint.getArgs()[1]);
+	}
+	
+	@AfterReturning(
+			pointcut="execution(* com.knowshare.enterprise.bean.usuario.UsuarioModBean.accionSolicitud(..))",
+			returning="result")
+	public void afterAccionSolicitud(JoinPoint joinPoint, Object result){
+		logger.info(DEBUG_MSG,joinPoint.getSignature().getName());
+		if((boolean)result){
+			insigniasBean.insigniasAccionSolicitud((String)joinPoint.getArgs()[0]);
+			insigniasBean.insigniasAccionSolicitud((String)joinPoint.getArgs()[1]);
+		}
+	}
+	
+	@AfterReturning(
+			pointcut="execution(* com.knowshare.enterprise.bean.idea.IdeaModBean.compartir(..))",
+			returning="result")
+	public void afterCompartir(JoinPoint joinPoint, Object result){
+		logger.info(DEBUG_MSG,joinPoint.getSignature().getName());
+		if(null != result)
+			insigniasBean.insigniasCompartir((IdeaDTO)result);
+	}
+	
+	@AfterReturning(
+			pointcut="execution(* com.knowshare.enterprise.bean.usuario.UsuarioModBean.agregarTGDirigido(..))",
+			returning="result")
+	public void afterAgregarTGDirigido(JoinPoint joinPoint, Object result){
+		logger.info(DEBUG_MSG,joinPoint.getSignature().getName());
+		if((boolean)result)
+			insigniasBean.insigniasAgregarTGDirigido((String)joinPoint.getArgs()[1]);
+	}
+	
+	@AfterReturning(
+			pointcut="execution(* com.knowshare.enterprise.bean.usuario.UsuarioModBean.agregarFormacionAcademica(..))",
+			returning="result")
+	public void afterAgregarFormacionAcademica(JoinPoint joinPoint, Object result){
+		logger.info(DEBUG_MSG,joinPoint.getSignature().getName());
+		if((boolean)result)
+			insigniasBean.insigniasAgregarFormacionAcademica((String)joinPoint.getArgs()[1]);
 	}
 }

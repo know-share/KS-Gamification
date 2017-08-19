@@ -11,6 +11,15 @@ import com.knowshare.dto.idea.IdeaDTO;
  */
 public interface InsigniasFacade {
 	
-	void insigniasIdea(IdeaDTO idea);
+	void insigniasCreacionIdea(IdeaDTO idea);
 
+	void insigniasSeguir(String username);
+	
+	void insigniasAccionSolicitud(String username);
+	
+	void insigniasCompartir(IdeaDTO idea);
+	
+	void insigniasAgregarTGDirigido(String username);
+	
+	void insigniasAgregarFormacionAcademica(String username);
 }
