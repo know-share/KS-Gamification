@@ -1,0 +1,22 @@
+[
+	{
+		"nombre": "Cualidad 1",
+		"tipo": "PROFESOR"
+	},
+	{
+		"nombre": "Cualidad 2",
+		"tipo": "PROFESOR"
+	},
+	{
+		"nombre": "Cualidad 3",
+		"tipo": "PROFESOR"
+	},
+	{
+		"nombre": "Cualidad 4",
+		"tipo": "PROFESOR"
+	},
+	{
+		"nombre": "Cualidad 5",
+		"tipo": "PROFESOR"
+	}
+]
