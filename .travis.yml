@@ -18,4 +18,5 @@ before_install:
   - cd KS-Enterprise && mvn install -DskipTests
 script: cd $TRAVIS_BUILD_DIR/ && mvn test -B
 after_success:
+  - mvn jacoco:report
   - bash <(curl -s https://codecov.io/bash)
