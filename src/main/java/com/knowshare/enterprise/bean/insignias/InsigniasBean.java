@@ -3,6 +3,8 @@
  */
 package com.knowshare.enterprise.bean.insignias;
 
+import java.time.Duration;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,8 +18,10 @@ import com.knowshare.enterprise.repository.perfilusuario.UsuarioRepository;
 import com.knowshare.entities.ludificacion.Insignia;
 import com.knowshare.entities.ludificacion.InsigniaPreview;
 import com.knowshare.entities.perfilusuario.Usuario;
+import com.knowshare.enums.TipoUsuariosEnum;
 
 /**
+ * {@link InsigniasFacade}
  * @author Miguel Montañez
  *
  */
@@ -36,6 +40,9 @@ public class InsigniasBean implements InsigniasFacade {
 	private static final String IDEA_PREFIX = "IDEA";
 	private static final String SEGUIDORES_PREFIX = "SEGUIDORES";
 	private static final String AMIGOS_PREFIX = "AMIGOS";
+	private static final String AVALAR_PREFIX = "AVALAR";
+	private static final String AVALADO_PREFIX = "AVALADO";
+	private static final String ANTIGUEDAD_PREFIX = "ANTIGUEDAD";
 
 	@Override
 	public void insigniasCreacionIdea(IdeaDTO idea) {
@@ -117,7 +124,63 @@ public class InsigniasBean implements InsigniasFacade {
 			usuarioRepository.save(usuario);
 		}
 	}
+
+	@Override
+	public void insigniasAvalarUsuario(String username,String usernameGive) {
+		// Mirar si fue primer aval dado.
+		final Usuario usuarioGive = usuarioRepository.findByUsernameIgnoreCase(usernameGive);
+		Insignia insignia = insigniaRepository.findOne(AVALAR_PREFIX);
+		if(null != insignia && !exist(usuarioGive.getInsignias(),insignia.getId()) &&
+				usuarioGive.getPersonasAvaladas().size() == 1){
+			final InsigniaPreview preview = new InsigniaPreview()
+					.setInsignia(insignia)
+					.setVisto(false);
+			usuarioGive.getInsignias().add(preview);
+			usuarioRepository.save(usuarioGive);
+		}
+
+		final Usuario usuarioRec = usuarioRepository.findByUsernameIgnoreCase(username);
+		
+		// Mirar primer aval recibido
+		if(usuarioGive.getTipo().equals(TipoUsuariosEnum.PROFESOR) && 
+				usuarioRec.getTipo().equals(TipoUsuariosEnum.ESTUDIANTE))
+			insignia = insigniaRepository.findOne(AVALADO_PREFIX+"_PROFESOR");
+		else
+			insignia = insigniaRepository.findOne(AVALADO_PREFIX+"_OTRO");
+		
+		if(null != insignia && !exist(usuarioRec.getInsignias(),insignia.getId())){
+			final InsigniaPreview preview = new InsigniaPreview()
+					.setInsignia(insignia)
+					.setVisto(false);
+			usuarioRec.getInsignias().add(preview);
+			usuarioRepository.save(usuarioRec);
+		}
+	}
 	
+	@Override
+	public void insigniasAntiguedad(Usuario usuario){
+		if(!usuario.getTipo().equals(TipoUsuariosEnum.ADMIN)){
+			final Date date = new Date();
+			final Long months = Duration.between(usuario.getFechaRegistro().toInstant(), date.toInstant())
+					.toDays()/30;
+			
+			final Insignia insignia = insigniaRepository.findOne(ANTIGUEDAD_PREFIX+months.toString());
+			if(null != insignia && !exist(usuario.getInsignias(),insignia.getId())){
+				final InsigniaPreview preview = new InsigniaPreview()
+						.setInsignia(insignia)
+						.setVisto(false);
+				usuario.getInsignias().add(preview);
+				usuarioRepository.save(usuario);
+			}
+		}
+	}
+	
+	/**
+	 * Se encarga de revisar si un usuario tiene ya una insignia.
+	 * @param insignias que un usuario posee.
+	 * @param insigniaId id de la insignia a revisar
+	 * @return verdadero si existe, falso si no.
+	 */
 	private boolean exist(List<InsigniaPreview> insignias,String insigniaId){
 		return !insignias.stream()
 				.filter(ins->ins.getInsignia().getId().equals(insigniaId))
