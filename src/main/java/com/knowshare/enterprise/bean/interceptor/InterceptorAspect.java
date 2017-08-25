@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 
 import com.knowshare.dto.idea.IdeaDTO;
 import com.knowshare.enterprise.bean.insignias.InsigniasFacade;
+import com.knowshare.entities.perfilusuario.Usuario;
 
 /**
  * Interceptor encargado de mirar si hay que otorgar insignias
@@ -85,5 +86,24 @@ public class InterceptorAspect {
 		logger.info(DEBUG_MSG,joinPoint.getSignature().getName());
 		if((boolean)result)
 			insigniasBean.insigniasAgregarFormacionAcademica((String)joinPoint.getArgs()[1]);
+	}
+	
+	@AfterReturning(
+			pointcut="execution(* com.knowshare.enterprise.bean.avales.AvalBean.avalarUsuario(..))",
+			returning="result")
+	public void afterAvalarUsuario(JoinPoint joinPoint, Object result){
+		logger.info(DEBUG_MSG,joinPoint.getSignature().getName());
+		if((boolean)result)
+			insigniasBean.insigniasAvalarUsuario((String)joinPoint.getArgs()[1], (String)joinPoint.getArgs()[0]);
+	}
+	
+	
+	@AfterReturning(
+			pointcut="execution(* com.knowshare.enterprise.bean.usuario.UsuarioListBean.login(..))",
+			returning="result")
+	public void afterLogin(JoinPoint joinPoint, Object result){
+		logger.info(DEBUG_MSG,joinPoint.getSignature().getName());
+		if(null != result)
+			insigniasBean.insigniasAntiguedad((Usuario)result);
 	}
 }

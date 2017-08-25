@@ -1,0 +1,22 @@
+[
+	{
+		"id": {"timestamp":1498358259,"machineIdentifier":8252218,"processIdentifier":-23083,"counter":3705630},
+		"tipo": "GENERALES",
+		"imagePath": "imgGenerales.png"
+	},
+	{
+		"id": {"timestamp":1498358259,"machineIdentifier":8252218,"processIdentifier":-23083,"counter":3705631},
+		"tipo": "GENERALES",
+		"imagePath": "imgGenerales.png"
+	},
+	{
+		"id": {"timestamp":1498358259,"machineIdentifier":8252218,"processIdentifier":-23083,"counter":3705632},
+		"tipo": "DEPORTES",
+		"imagePath": "imgDeportes.png"
+	},
+	{
+		"id": {"timestamp":1498358259,"machineIdentifier":8252218,"processIdentifier":-23083,"counter":3705633},
+		"tipo": "ARTES",
+		"imagePath": "imgArtes.png"
+	}
+]

@@ -1,0 +1,79 @@
+[
+    {
+        "id":"IDEA1",
+        "nombre":"Primer idea",
+        "descripcion":"Por publicar tu primera idea en Know&Share"
+    },{
+        "id":"IDEA10",
+        "nombre":"10 ideas publicadas",
+        "descripcion":"Por publicar 10 ideas en Know&Share"
+    },{
+        "id":"IDEA50",
+        "nombre":"50 ideas publicadas",
+        "descripcion":"Ya todo un usuario experimentado en uso de ideas"
+    },{
+        "id":"TOP3",
+        "nombre":"En el top",
+        "descripcion":"Consiguió llegar a lo alto de su carrera"
+    },{
+        "id":"AVALAR",
+        "nombre":"Primer aval dado",
+        "descripcion":"Por avalar habilidad/cualidad de un usuario por primera vez"
+    },{
+        "id":"AVALADO_PROFESOR",
+        "nombre":"Habilidad reconocida",
+        "descripcion":"¡Un profesor a reconocido una de tus habilidades!"
+    },{
+        "id":"AVALADO_OTRO",
+        "nombre":"Habilidad/Cualidad avalada",
+        "descripcion":"Te han reconocido una de tus cualidades/habilidades"
+    },{
+        "id":"AMIGOS1",
+        "nombre":"Primer amigo en tu red",
+        "descripcion":"Por tener tu primera amistad dentro de tu red"
+    },{
+        "id":"AMIGOS10",
+        "nombre":"10 amigos en tu red",
+        "descripcion":"Ya vas fortaleciendo tu red de conocimiento"
+    },{
+        "id":"AMIGOS50",
+        "nombre":"50 amigos en tu red",
+        "descripcion":"Posees una red sólida para crecer profesionalmente"
+    },{
+        "id":"SEGUIDORES1",
+        "nombre":"Tu primer seguidor",
+        "descripcion":"Te estás conviertiendo popular"
+    },{
+        "id":"SEGUIDORES10",
+        "nombre":"10 seguidores",
+        "descripcion":"¡Tu popularidad va en ascenso!"
+    },{
+        "id":"SEGUIDORES50",
+        "nombre":"50 seguidores",
+        "descripcion":"Te has convertido muy popular dentro de tu red"
+    },{
+        "id":"IDEA_COMPARTIR",
+        "nombre":"Compartir una idea",
+        "descripcion":"Por compartir conocimiento a toda tu red"
+    },{
+        "id":"ADD_TG",
+        "nombre":"Soy director de grado",
+        "descripcion":"Diste a conocer trabajos de grado que has dirigido"
+    },{
+        "id":"ADD_FA",
+        "nombre":"Formación académica",
+        "descripcion":"Diste a conocer tu pasado académico"
+    },{
+        "id":"ANTIGUEDAD1",
+        "nombre":"Un mes de antigüedad",
+        "descripcion":"Cumplir un mes de registro en Know&Share"
+    },{
+        "id":"ANTIGUEDAD6",
+        "nombre":"6 meses de antigüedad",
+        "descripcion":"Medio año entre la comunidad de Know&Share"
+    },{
+        "id":"ANTIGUEDAD12",
+        "nombre":"Un año de antigüedad",
+        "descripcion":"Tu primer aniversario en Know&Share. ¡Felicidades!"
+    }
+]
