@@ -31,7 +31,7 @@ public class LeaderBean implements LeaderFacade{
 	private CarreraRepository carreraRepository;
 	
 	@Override
-	public List<CarreraLeaderDTO> CarrerasLeader() {
+	public List<CarreraLeaderDTO> carrerasLeader() {
 		List<Carrera>carreras = carreraRepository.findAll();
 		List<Usuario> usuarios = usuarioRepository.findAll();
 		List<CarreraLeaderDTO> carrerasxusuario = new ArrayList<CarreraLeaderDTO>();
@@ -52,7 +52,8 @@ public class LeaderBean implements LeaderFacade{
 					}
 				}
 			}
-		}
+		} // hacer map -- para usuarios mostrar unos luego puntos... y posicion de uno, la idea es por carrera y mostrar 
+		// la que mas avales tenga
 		Collections.sort(carrerasxusuario, new Comparator<CarreraLeaderDTO>() {
 		      @Override
 		      public int compare(final CarreraLeaderDTO object1, final CarreraLeaderDTO object2) {
@@ -62,7 +63,7 @@ public class LeaderBean implements LeaderFacade{
 		return carrerasxusuario;
 	}
 	
-	int findCarrera (String nombre,List<CarreraLeaderDTO> carrerasxusuario ) {
+	private int findCarrera (String nombre,List<CarreraLeaderDTO> carrerasxusuario ) {
 		int cont = 0;
 		if(!carrerasxusuario.isEmpty()) {
 			for(CarreraLeaderDTO c: carrerasxusuario) {

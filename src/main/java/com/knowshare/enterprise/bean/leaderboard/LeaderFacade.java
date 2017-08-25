@@ -12,5 +12,5 @@ import com.knowshare.dto.ludificacion.CarreraLeaderDTO;
  */
 public interface LeaderFacade {
 
-	List<CarreraLeaderDTO> CarrerasLeader();
+	List<CarreraLeaderDTO> carrerasLeader();
 }
