@@ -4,6 +4,8 @@
 package com.knowshare.enterprise.bean.leaderboard;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +53,12 @@ public class LeaderBean implements LeaderFacade{
 				}
 			}
 		}
+		Collections.sort(carrerasxusuario, new Comparator<CarreraLeaderDTO>() {
+		      @Override
+		      public int compare(final CarreraLeaderDTO object1, final CarreraLeaderDTO object2) {
+		          return object2.getCantidad()-object1.getCantidad();
+		      }
+		  });
 		return carrerasxusuario;
 	}
 	
