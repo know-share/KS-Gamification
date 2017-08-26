@@ -18,7 +18,8 @@ import com.knowshare.entities.academia.Carrera;
 import com.knowshare.entities.perfilusuario.Usuario;
 
 /**
- * @author Pipe
+ * {@link LeaderFacade}
+ * @author Felipe Bautista
  *
  */
 @Component
