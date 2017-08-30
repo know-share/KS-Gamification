@@ -7,11 +7,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.aggregation.Aggregation;
+import org.springframework.data.mongodb.core.aggregation.AggregationResults;
 import org.springframework.stereotype.Component;
 
 import com.knowshare.dto.ludificacion.LeaderDTO;
@@ -21,6 +23,10 @@ import com.knowshare.entities.academia.Carrera;
 import com.knowshare.entities.ludificacion.HabilidadAval;
 import com.knowshare.entities.perfilusuario.Usuario;
 import com.knowshare.enums.TipoUsuariosEnum;
+
+import static org.springframework.data.mongodb.core.aggregation.Aggregation.group;
+import static org.springframework.data.mongodb.core.aggregation.Aggregation.newAggregation;
+import static org.springframework.data.mongodb.core.aggregation.Aggregation.unwind;
 
 /**
  * {@link LeaderFacade}
@@ -36,40 +42,48 @@ public class LeaderBean implements LeaderFacade {
 
 	@Autowired
 	private CarreraRepository carreraRepository;
+	
+	@Autowired
+	private MongoTemplate mongoTemplate;
+	
+	private static final String CARRERAS_LIST = "carreras_list";
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	public List<LeaderDTO> carrerasLeader() {
-		List<Carrera> carreras = carreraRepository.findAll();
-		List<Usuario> usuarios = usuarioRepository.findAll();
+		final List<Carrera> carreras = carreraRepository.findAll();
+		final List<Map> results = getCantidadEstudiantesXCarreras();
 		List<LeaderDTO> carrerasxusuario = null;
-		Map<String, LeaderDTO> mapa = new HashMap<String, LeaderDTO>();
-		if (!carreras.isEmpty() && !usuarios.isEmpty()) {
+		final Map<String, LeaderDTO> mapa = new HashMap<>();
+		if (!carreras.isEmpty() ) {
 			for (Carrera c : carreras) {
 				LeaderDTO carrera = new LeaderDTO();
 				carrera.setNombre(c.getNombre());
 				carrera.setCantidad(0);
 				mapa.put(c.getId(), carrera);
 			}
-			for (Usuario u : usuarios) {
-				if (u.getCarreras() != null) {
-					for (Carrera cu : u.getCarreras()) {
-						LeaderDTO dto = mapa.get(cu.getId());
-						if (dto != null) {
-							dto.setCantidad(dto.getCantidad() + 1);
-							mapa.put(cu.getId(), dto);
-						}
-					}
-				}
+			for(Map map : results){
+				LeaderDTO carrera = mapa.get(map.get("_id"));
+				if(null != carrera)
+					carrera.setCantidad(Integer.parseInt(map.get("cantidad").toString()));
 			}
 		}
-		carrerasxusuario = new ArrayList<LeaderDTO>(mapa.values());
-		Collections.sort(carrerasxusuario, new Comparator<LeaderDTO>() {
-			@Override
-			public int compare(final LeaderDTO object1, final LeaderDTO object2) {
-				return object2.getCantidad() - object1.getCantidad();
-			}
-		});
+		carrerasxusuario = new ArrayList<>(mapa.values());
+		Collections.sort(carrerasxusuario,(o1,o2)->o2.getCantidad()-o1.getCantidad()); 
 		return carrerasxusuario;
+	}
+	
+	@SuppressWarnings("rawtypes")
+	private List<Map> getCantidadEstudiantesXCarreras(){
+		final Aggregation agg = newAggregation(
+				unwind("enfasis"),
+				group("id").addToSet("enfasis.carrera").as(CARRERAS_LIST),
+				unwind(CARRERAS_LIST),
+				group(CARRERAS_LIST).count().as("cantidad")
+			);
+		AggregationResults<Map> result = 
+				mongoTemplate.aggregate(agg, Usuario.class, Map.class);
+		return result.getMappedResults();
 	}
 
 	@Override
