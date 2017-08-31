@@ -94,7 +94,7 @@ public class LeaderBean implements LeaderFacade {
 		List<LeaderDTO> Final = new ArrayList<LeaderDTO>();
 		String habilidad = "";
 		int cantidad = -1;
-		LeaderDTO nuevo = null;
+		LeaderDTO nuevo = null; // toca ver que pasa con POS!
 		for (Usuario us : usuarios) {
 			if (us.getTipo() == TipoUsuariosEnum.ESTUDIANTE) {
 				for (Carrera ca : us.getCarreras()) {
@@ -130,18 +130,18 @@ public class LeaderBean implements LeaderFacade {
 			}
 		});
 		for (int i = 0; i < usFinales.size(); i++) {
-			if (i < 10 && usFinales.get(i).getNombre().equalsIgnoreCase(username)) {
+			if (i < 5 && usFinales.get(i).getNombre().equalsIgnoreCase(username)) {
 				usCarrera = false;
 			}
-			if (i < 10 && !usCarrera) {
+			if (i < 5 && !usCarrera) {
 				Final.add(usFinales.get(i));
-				if (i == 9)
+				if (i == 4)
 					return Final;
 			}
-			if (i < 9 && usCarrera) {
+			if (i < 4 && usCarrera) {
 				Final.add(usFinales.get(i));
 			}
-			if (i > 9 && usCarrera && usFinales.get(i).getNombre().equalsIgnoreCase(username)) {
+			if (i > 4 && usCarrera && usFinales.get(i).getNombre().equalsIgnoreCase(username)) {
 				Final.add(usFinales.get(i));
 				return Final;
 			}
