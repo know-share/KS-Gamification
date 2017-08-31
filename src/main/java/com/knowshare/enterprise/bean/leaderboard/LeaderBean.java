@@ -5,28 +5,29 @@ package com.knowshare.enterprise.bean.leaderboard;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;
 import org.springframework.data.mongodb.core.aggregation.AggregationResults;
+import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.stereotype.Component;
 
 import com.knowshare.dto.ludificacion.LeaderDTO;
 import com.knowshare.enterprise.repository.academia.CarreraRepository;
-import com.knowshare.enterprise.repository.perfilusuario.UsuarioRepository;
 import com.knowshare.entities.academia.Carrera;
-import com.knowshare.entities.ludificacion.HabilidadAval;
 import com.knowshare.entities.perfilusuario.Usuario;
 import com.knowshare.enums.TipoUsuariosEnum;
 
 import static org.springframework.data.mongodb.core.aggregation.Aggregation.group;
 import static org.springframework.data.mongodb.core.aggregation.Aggregation.newAggregation;
 import static org.springframework.data.mongodb.core.aggregation.Aggregation.unwind;
+import static org.springframework.data.mongodb.core.aggregation.Aggregation.match;
+import static org.springframework.data.mongodb.core.aggregation.Aggregation.sort;
 
 /**
  * {@link LeaderFacade}
@@ -38,15 +39,15 @@ import static org.springframework.data.mongodb.core.aggregation.Aggregation.unwi
 public class LeaderBean implements LeaderFacade {
 
 	@Autowired
-	private UsuarioRepository usuarioRepository;
-
-	@Autowired
 	private CarreraRepository carreraRepository;
 	
 	@Autowired
 	private MongoTemplate mongoTemplate;
 	
 	private static final String CARRERAS_LIST = "carreras_list";
+	private static final String MAX_AVAL = "maximo_aval";
+	private static final String NOMBRE = "nombre";
+	private static final String APELLIDO = "apellido";
 
 	@SuppressWarnings("rawtypes")
 	@Override
@@ -60,6 +61,7 @@ public class LeaderBean implements LeaderFacade {
 				LeaderDTO carrera = new LeaderDTO();
 				carrera.setNombre(c.getNombre());
 				carrera.setCantidad(0);
+				carrera.setId(c.getId());
 				mapa.put(c.getId(), carrera);
 			}
 			for(Map map : results){
@@ -85,68 +87,35 @@ public class LeaderBean implements LeaderFacade {
 				mongoTemplate.aggregate(agg, Usuario.class, Map.class);
 		return result.getMappedResults();
 	}
-
-	@Override
-	public List<LeaderDTO> estudiantesLeader(String username, String carrera) {
-		List<Usuario> usuarios = usuarioRepository.findAll();
-		boolean pertenece = false, usCarrera = false;
-		List<LeaderDTO> usFinales = new ArrayList<LeaderDTO>();
-		List<LeaderDTO> Final = new ArrayList<LeaderDTO>();
-		String habilidad = "";
-		int cantidad = -1;
-		LeaderDTO nuevo = null; // toca ver que pasa con POS!
-		for (Usuario us : usuarios) {
-			if (us.getTipo() == TipoUsuariosEnum.ESTUDIANTE) {
-				for (Carrera ca : us.getCarreras()) {
-					if (ca.getNombre().equalsIgnoreCase(carrera)) {
-						pertenece = true;
-						if (us.getNombre().equalsIgnoreCase(username))
-							usCarrera = true;
-					}
-				}
-				if (pertenece) {
-					for (HabilidadAval ha : us.getHabilidades()) {
-						if (ha.getCantidad() > cantidad) {
-							habilidad = ha.getHabilidad().getNombre();
-							cantidad = ha.getCantidad();
-						}
-					}
-
-					nuevo = new LeaderDTO();
-					nuevo.setAval(habilidad);
-					nuevo.setCantidad(cantidad);
-					nuevo.setNombre(us.getNombre());
-					usFinales.add(nuevo);
-
-					cantidad = -1;
-				}
-				pertenece = false;
-			}
-		}
-		Collections.sort(usFinales, new Comparator<LeaderDTO>() {
-			@Override
-			public int compare(final LeaderDTO object1, final LeaderDTO object2) {
-				return object2.getCantidad() - object1.getCantidad();
-			}
-		});
-		for (int i = 0; i < usFinales.size(); i++) {
-			if (i < 5 && usFinales.get(i).getNombre().equalsIgnoreCase(username)) {
-				usCarrera = false;
-			}
-			if (i < 5 && !usCarrera) {
-				Final.add(usFinales.get(i));
-				if (i == 4)
-					return Final;
-			}
-			if (i < 4 && usCarrera) {
-				Final.add(usFinales.get(i));
-			}
-			if (i > 4 && usCarrera && usFinales.get(i).getNombre().equalsIgnoreCase(username)) {
-				Final.add(usFinales.get(i));
-				return Final;
-			}
-		}
-		return Final;
+	
+	@SuppressWarnings("rawtypes")
+	private List<Map> getUsuariosMap(String carrera,TipoUsuariosEnum tipo){
+		final Aggregation agg = newAggregation(
+				match(Criteria.where("carreras.$id").is(carrera)
+						.and("tipo").is(tipo)),
+				unwind("habilidades"),
+				group("username")
+					.first("habilidades.nombre").as("habilidad")
+					.first(NOMBRE).as(NOMBRE)
+					.first(APELLIDO).as(APELLIDO)
+					.max("habilidades.cantidad").as(MAX_AVAL),
+				sort(Direction.DESC,MAX_AVAL)
+			);
+		AggregationResults<Map> result = 
+				mongoTemplate.aggregate(agg, Usuario.class, Map.class);
+		return result.getMappedResults();
 	}
 
+	@Override
+	@SuppressWarnings("rawtypes")
+	public List<LeaderDTO> usuariosLeader(String username, String carrera,TipoUsuariosEnum tipo) {
+		final List<LeaderDTO> leader = new ArrayList<>();
+		for(Map map: getUsuariosMap(carrera,tipo)){
+			leader.add(new LeaderDTO()
+					.setCantidad(Integer.parseInt(map.get(MAX_AVAL).toString()))
+					.setNombre(map.get(NOMBRE).toString() +" "+ map.get(APELLIDO).toString())
+					.setAval(map.get("habilidad").toString()));
+		}
+		return leader;
+	}
 }

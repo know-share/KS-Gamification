@@ -5,6 +5,7 @@ package com.knowshare.enterprise.bean.leaderboard;
 import java.util.List;
 
 import com.knowshare.dto.ludificacion.LeaderDTO;
+import com.knowshare.enums.TipoUsuariosEnum;
 
 /**
  * Permite la generación de los leaderboard de la aplicación
@@ -19,5 +20,5 @@ public interface LeaderFacade {
 	 * @return Lista de {@link LeaderDTO carreras}
 	 */
 	List<LeaderDTO> carrerasLeader();
-	List<LeaderDTO> estudiantesLeader(String username, String carrera);
+	List<LeaderDTO> usuariosLeader(String username, String carrera, TipoUsuariosEnum tipo);
 }
