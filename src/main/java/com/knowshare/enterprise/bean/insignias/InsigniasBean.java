@@ -4,6 +4,7 @@
 package com.knowshare.enterprise.bean.insignias;
 
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.knowshare.dto.idea.IdeaDTO;
+import com.knowshare.dto.ludificacion.LeaderDTO;
 import com.knowshare.enterprise.repository.idea.IdeaRepository;
 import com.knowshare.enterprise.repository.ludificacion.InsigniaRepository;
 import com.knowshare.enterprise.repository.perfilusuario.UsuarioRepository;
@@ -163,8 +165,36 @@ public class InsigniasBean implements InsigniasFacade {
 			final Date date = new Date();
 			final Long months = Duration.between(usuario.getFechaRegistro().toInstant(), date.toInstant())
 					.toDays()/30;
+			final List<String> badges = new ArrayList<>(); 
+			if(months >= 1)
+				badges.add("1");
+			if(months >= 6)
+				badges.add("6");
+			if(months >= 12)
+				badges.add("12");
 			
-			final Insignia insignia = insigniaRepository.findOne(ANTIGUEDAD_PREFIX+months.toString());
+			for (String string : badges) {
+				final Insignia insignia = insigniaRepository.findOne(ANTIGUEDAD_PREFIX+string);
+				if(null != insignia && !exist(usuario.getInsignias(),insignia.getId())){
+					final InsigniaPreview preview = new InsigniaPreview()
+							.setInsignia(insignia)
+							.setVisto(false);
+					usuario.getInsignias().add(preview);
+					usuarioRepository.save(usuario);
+				}
+			}
+		}
+	}
+	
+	@Override
+	public void insigniasLeaderBoard(String username, List<LeaderDTO> leaderboard) {
+		final List<LeaderDTO> leader = leaderboard
+				.stream()
+				.filter(l -> l.getUsername().equalsIgnoreCase(username))
+				.collect(Collectors.toList());
+		if(!leader.isEmpty()){
+			final Usuario usuario = usuarioRepository.findByUsernameIgnoreCase(username);
+			final Insignia insignia = insigniaRepository.findOne("TOP3");
 			if(null != insignia && !exist(usuario.getInsignias(),insignia.getId())){
 				final InsigniaPreview preview = new InsigniaPreview()
 						.setInsignia(insignia)

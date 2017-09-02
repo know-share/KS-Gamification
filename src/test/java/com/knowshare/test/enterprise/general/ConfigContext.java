@@ -23,8 +23,12 @@ import org.springframework.util.ResourceUtils;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.knowshare.enterprise.bean.avales.AvalBean;
+import com.knowshare.enterprise.bean.avales.AvalFacade;
 import com.knowshare.enterprise.bean.insignias.InsigniasBean;
 import com.knowshare.enterprise.bean.insignias.InsigniasFacade;
+import com.knowshare.enterprise.bean.leaderboard.LeaderBean;
+import com.knowshare.enterprise.bean.leaderboard.LeaderFacade;
 import com.knowshare.entities.academia.Carrera;
 import com.knowshare.entities.ludificacion.Insignia;
 import com.knowshare.entities.perfilusuario.Cualidad;
@@ -94,6 +98,16 @@ public class ConfigContext {
 	@Bean
 	public InsigniasFacade getInsigniasFacade(){
 		return new InsigniasBean();
+	}
+	
+	@Bean
+	public AvalFacade getAvalFacade(){
+		return new AvalBean();
+	}
+	
+	@Bean
+	public LeaderFacade getLeaderFacade(){
+		return new LeaderBean();
 	}
 	
 	@PreDestroy

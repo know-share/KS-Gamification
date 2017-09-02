@@ -113,6 +113,7 @@ public class LeaderBean implements LeaderFacade {
 		for(Map map: getUsuariosMap(carrera,tipo)){
 			leader.add(new LeaderDTO()
 					.setCantidad(Integer.parseInt(map.get(MAX_AVAL).toString()))
+					.setUsername(map.get("_id").toString())
 					.setNombre(map.get(NOMBRE).toString() +" "+ map.get(APELLIDO).toString())
 					.setAval(map.get("habilidad").toString()));
 		}

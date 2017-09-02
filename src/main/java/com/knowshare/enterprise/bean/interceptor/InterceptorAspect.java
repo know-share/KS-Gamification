@@ -3,6 +3,8 @@
  */
 package com.knowshare.enterprise.bean.interceptor;
 
+import java.util.List;
+
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
@@ -12,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.knowshare.dto.idea.IdeaDTO;
+import com.knowshare.dto.ludificacion.LeaderDTO;
 import com.knowshare.enterprise.bean.insignias.InsigniasFacade;
 import com.knowshare.entities.perfilusuario.Usuario;
 
@@ -97,7 +100,6 @@ public class InterceptorAspect {
 			insigniasBean.insigniasAvalarUsuario((String)joinPoint.getArgs()[1], (String)joinPoint.getArgs()[0]);
 	}
 	
-	
 	@AfterReturning(
 			pointcut="execution(* com.knowshare.enterprise.bean.usuario.UsuarioListBean.login(..))",
 			returning="result")
@@ -105,5 +107,15 @@ public class InterceptorAspect {
 		logger.info(DEBUG_MSG,joinPoint.getSignature().getName());
 		if(null != result)
 			insigniasBean.insigniasAntiguedad((Usuario)result);
+	}
+	
+	@SuppressWarnings("unchecked")
+	@AfterReturning(
+			pointcut="execution(* com.knowshare.enterprise.bean.leaderboard.LeaderBean.usuariosLeader(..))",
+			returning="result")
+	public void afterUsuariosLeader(JoinPoint joinPoint, Object result){
+		logger.info(DEBUG_MSG,joinPoint.getSignature().getName());
+		if(null != result)
+			insigniasBean.insigniasLeaderBoard((String)joinPoint.getArgs()[0],(List<LeaderDTO>)result);
 	}
 }

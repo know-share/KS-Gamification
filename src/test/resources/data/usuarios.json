@@ -13,24 +13,26 @@
 				"cantidad": 0,
 				"habilidad": {
 					"id": {"timestamp":1498358259,"machineIdentifier":8252218,"processIdentifier":-23083,"counter":3705635}
-				}
+				},
+				"nombre":"Habilidad Personal 1"
 			},
 			{
 				"cantidad": 0,
 				"habilidad": {
 					"id": {"timestamp":1498358259,"machineIdentifier":8252218,"processIdentifier":-23083,"counter":3705638}
-				}
+				},
+				"nombre":"Habilidad Profesional sistemas 1"
 			}
 		],
 		"personasAvaladas": [],
 		"enfasis": [
 			{
 				"nombre": "Enfasis sistemas 1",
-				"carrera": "Ingeniería de sistemas"
+				"carrera": "idCarreraSistemas"
 			},
 			{
 				"nombre": "Enfasis sistemas 2",
-				"carrera": "Ingeniería de sistemas"
+				"carrera": "idCarreraSistemas"
 			}
 		],
 		"areasConocimiento": [
@@ -77,31 +79,48 @@
 		"nombre": "Pablo",
 		"apellido": "Gaitán",
 		"correo": "pablo@mail.com",
-		"tipo": "ESTUDIANTE",
-		"semestre": 10,
+		"tipo": "PROFESOR",
 		"habilidades": [
 			{
 				"cantidad": 0,
 				"habilidad": {
-					"id": {"timestamp":1498358259,"machineIdentifier":8252218,"processIdentifier":-23083,"counter":3705637}
-				}
+					"id": {"timestamp":1498358259,"machineIdentifier":8252218,"processIdentifier":-23083,"counter":3705638}
+				},
+				"nombre":"Habilidad Profesional sistemas 1"
 			},
 			{
 				"cantidad": 0,
 				"habilidad": {
 					"id": {"timestamp":1498358259,"machineIdentifier":8252218,"processIdentifier":-23083,"counter":3705639}
-				}
+				},
+				"nombre":"Habilidad Profesional sistemas  2"
+			}
+		],
+		"cualidadesProfesor":[
+			{
+				"cantidad":0,
+				"cualidad":{
+					"id": {"timestamp":1498358259,"machineIdentifier":8252218,"processIdentifier":-23083,"counter":3705735}
+				},
+				"nombre":"Cualidad 1"
+			},
+			{
+				"cantidad":0,
+				"cualidad":{
+					"id": {"timestamp":1498358259,"machineIdentifier":8252218,"processIdentifier":-23083,"counter":3705736}
+				},
+				"nombre":"Cualidad 2"
 			}
 		],
 		"personasAvaladas": [],
 		"enfasis": [
 			{
 				"nombre": "Enfasis sistemas 1",
-				"carrera": "Ingeniería de sistemas"
+				"carrera": "idCarreraSistemas"
 			},
 			{
 				"nombre": "Enfasis sistemas 4",
-				"carrera": "Ingeniería de sistemas"
+				"carrera": "idCarreraSistemas"
 			}
 		],
 		"areasConocimiento": [
@@ -115,18 +134,6 @@
 		"seguidores": [],
 		"siguiendo": [],
 		"solicitudesAmistad": [],
-		"preferencias": {
-			"seminario": false,
-			"temaTG": true
-		},
-		"gustos": [
-			{
-				"id": {"timestamp":1498358259,"machineIdentifier":8252218,"processIdentifier":-23083,"counter":3705631}
-			},
-			{
-				"id": {"timestamp":1498358259,"machineIdentifier":8252218,"processIdentifier":-23083,"counter":3705632}
-			}
-		],
 		"carreras": [
 			{
 				"id": "idCarreraSistemas"

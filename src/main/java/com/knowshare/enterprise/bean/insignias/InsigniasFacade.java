@@ -3,7 +3,10 @@
  */
 package com.knowshare.enterprise.bean.insignias;
 
+import java.util.List;
+
 import com.knowshare.dto.idea.IdeaDTO;
+import com.knowshare.dto.ludificacion.LeaderDTO;
 import com.knowshare.entities.ludificacion.Insignia;
 import com.knowshare.entities.perfilusuario.Usuario;
 
@@ -69,4 +72,11 @@ public interface InsigniasFacade {
 	 * @param usuario a quién se le revisará
 	 */
 	void insigniasAntiguedad(Usuario usuario);
+	
+	/**
+	 * Otorga insignias por quedar en el top 3 del leaderboard
+	 * @param username a quién se le revisará
+	 * @param leaderboard
+	 */
+	void insigniasLeaderBoard(String username, List<LeaderDTO> leaderboard);
 }
