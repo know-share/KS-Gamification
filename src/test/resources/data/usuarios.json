@@ -1,0 +1,147 @@
+[
+	{
+		"id":{"timestamp":1498358259,"machineIdentifier":8252218,"processIdentifier":-23083,"counter":1},
+		"username": "MinMiguelM",
+		"password": "8e21d61d91c6c6e1f3137b783a1b524d",
+		"nombre": "Miguel",
+		"apellido": "Montañez",
+		"correo": "miguel@mail.com",
+		"tipo": "ESTUDIANTE",
+		"semestre": 10,
+		"habilidades": [
+			{
+				"cantidad": 0,
+				"habilidad": {
+					"id": {"timestamp":1498358259,"machineIdentifier":8252218,"processIdentifier":-23083,"counter":3705635}
+				},
+				"nombre":"Habilidad Personal 1"
+			},
+			{
+				"cantidad": 0,
+				"habilidad": {
+					"id": {"timestamp":1498358259,"machineIdentifier":8252218,"processIdentifier":-23083,"counter":3705638}
+				},
+				"nombre":"Habilidad Profesional sistemas 1"
+			}
+		],
+		"personasAvaladas": [],
+		"enfasis": [
+			{
+				"nombre": "Enfasis sistemas 1",
+				"carrera": "idCarreraSistemas"
+			},
+			{
+				"nombre": "Enfasis sistemas 2",
+				"carrera": "idCarreraSistemas"
+			}
+		],
+		"areasConocimiento": [
+			{
+				"nombre": "AC sistemas 1",
+				"porcentaje": 0,
+				"carrera": "Ingeniería de sistemas"
+			},
+			{
+				"nombre": "AC sistemas 2",
+				"porcentaje": 0,
+				"carrera": "Ingeniería de sistemas"
+			}
+		],
+		"amigos": [],
+		"seguidores": [],
+		"siguiendo": [],
+		"solicitudesAmistad": [],
+		"preferencias": {
+			"seminario": false,
+			"temaTG": true
+		},
+		"gustos": [
+			{
+				"id": {"timestamp":1498358259,"machineIdentifier":8252218,"processIdentifier":-23083,"counter":3705631}
+			},
+			{
+				"id": {"timestamp":1498358259,"machineIdentifier":8252218,"processIdentifier":-23083,"counter":3705632}
+			}
+		],
+		"carreras": [
+			{
+				"id": "idCarreraSistemas"
+			}
+		],
+		"insignias": [],
+		"personalidad": {
+			"nombre":"ISFJ"
+		}
+	},{
+		"id":{"timestamp":1498358259,"machineIdentifier":8252218,"processIdentifier":-23083,"counter":2},
+		"username": "pablo.gaitan",
+		"password": "8e21d61d91c6c6e1f3137b783a1b524d",
+		"nombre": "Pablo",
+		"apellido": "Gaitán",
+		"correo": "pablo@mail.com",
+		"tipo": "PROFESOR",
+		"habilidades": [
+			{
+				"cantidad": 0,
+				"habilidad": {
+					"id": {"timestamp":1498358259,"machineIdentifier":8252218,"processIdentifier":-23083,"counter":3705638}
+				},
+				"nombre":"Habilidad Profesional sistemas 1"
+			},
+			{
+				"cantidad": 0,
+				"habilidad": {
+					"id": {"timestamp":1498358259,"machineIdentifier":8252218,"processIdentifier":-23083,"counter":3705639}
+				},
+				"nombre":"Habilidad Profesional sistemas  2"
+			}
+		],
+		"cualidadesProfesor":[
+			{
+				"cantidad":0,
+				"cualidad":{
+					"id": {"timestamp":1498358259,"machineIdentifier":8252218,"processIdentifier":-23083,"counter":3705735}
+				},
+				"nombre":"Cualidad 1"
+			},
+			{
+				"cantidad":0,
+				"cualidad":{
+					"id": {"timestamp":1498358259,"machineIdentifier":8252218,"processIdentifier":-23083,"counter":3705736}
+				},
+				"nombre":"Cualidad 2"
+			}
+		],
+		"personasAvaladas": [],
+		"enfasis": [
+			{
+				"nombre": "Enfasis sistemas 1",
+				"carrera": "idCarreraSistemas"
+			},
+			{
+				"nombre": "Enfasis sistemas 4",
+				"carrera": "idCarreraSistemas"
+			}
+		],
+		"areasConocimiento": [
+			{
+				"nombre": "AC sistemas 1",
+				"porcentaje": 0,
+				"carrera": "Ingeniería de sistemas"
+			}
+		],
+		"amigos": [],
+		"seguidores": [],
+		"siguiendo": [],
+		"solicitudesAmistad": [],
+		"carreras": [
+			{
+				"id": "idCarreraSistemas"
+			}
+		],
+		"insignias": [],
+		"personalidad": {
+			"nombre":"ENTP"
+		}
+	}
+]
