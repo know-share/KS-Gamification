@@ -75,6 +75,12 @@ public class LeaderBean implements LeaderFacade {
 		return carrerasxusuario;
 	}
 	
+	/**
+	 * Consulta la cantidad de estudiantes que hay por
+	 * carrera
+	 * @return Una lista con campos especificando la carrera y
+	 * la cantidad de estudiantes que hay
+	 */
 	@SuppressWarnings("rawtypes")
 	private List<Map> getCantidadEstudiantesXCarreras(){
 		final Aggregation agg = newAggregation(
@@ -88,6 +94,14 @@ public class LeaderBean implements LeaderFacade {
 		return result.getMappedResults();
 	}
 	
+	/**
+	 * Consulta la cantidad de avales que tienen los estudiantes
+	 * de cierta carrera
+	 * @param carrera
+	 * @param tipo de usuario
+	 * @return Una lista con campos especificando el usuario y su habilidad 
+	 * con mayor aval.
+	 */
 	@SuppressWarnings("rawtypes")
 	private List<Map> getUsuariosMap(String carrera,TipoUsuariosEnum tipo){
 		final Aggregation agg = newAggregation(
