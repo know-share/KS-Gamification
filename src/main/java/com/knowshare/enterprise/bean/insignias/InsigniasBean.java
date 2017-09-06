@@ -104,13 +104,15 @@ public class InsigniasBean implements InsigniasFacade {
 	@Override
 	public void insigniasAgregarTGDirigido(String username) {
 		final Usuario usuario = usuarioRepository.findByUsernameIgnoreCase(username);
-		final Insignia insignia = insigniaRepository.findOne("ADD_TG");
-		if(null != insignia && !exist(usuario.getInsignias(),insignia.getId())){
-			final InsigniaPreview preview = new InsigniaPreview()
-					.setInsignia(insignia)
-					.setVisto(false);
-			usuario.getInsignias().add(preview);
-			usuarioRepository.save(usuario);
+		if(usuario.getTipo().equals(TipoUsuariosEnum.PROFESOR)){
+			final Insignia insignia = insigniaRepository.findOne("ADD_TG");
+			if(null != insignia && !exist(usuario.getInsignias(),insignia.getId())){
+				final InsigniaPreview preview = new InsigniaPreview()
+						.setInsignia(insignia)
+						.setVisto(false);
+				usuario.getInsignias().add(preview);
+				usuarioRepository.save(usuario);
+			}
 		}
 	}
 	
