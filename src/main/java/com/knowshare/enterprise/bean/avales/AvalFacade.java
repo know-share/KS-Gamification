@@ -8,6 +8,8 @@ import org.bson.types.ObjectId;
 import com.knowshare.enums.TipoAvalEnum;
 
 /**
+ * Bean encargado de manejar los avales de los usuarios
+ * de la aplicación
  * @author Miguel Montañez
  *
  */

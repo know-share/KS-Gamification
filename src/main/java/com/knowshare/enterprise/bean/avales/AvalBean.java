@@ -18,6 +18,7 @@ import com.knowshare.enums.TipoAvalEnum;
 import com.knowshare.enums.TipoUsuariosEnum;
 
 /**
+ * {@link AvalFacade}
  * @author Miguel Montañez
  *
  */
@@ -68,6 +69,16 @@ public class AvalBean implements AvalFacade {
 		return false;
 	}
 	
+	/**
+	 * Revisa si el usuario {usuario} ya avaló al usuario
+	 * {usuarioTarget}
+	 * @param usuario
+	 * @param usuarioTarget
+	 * @param id de la habilidad o cualidad
+	 * @param tipo 
+	 * @return Verdadero si ya existe el aval, de lo contrario
+	 * falso.
+	 */
 	private boolean existAval(Usuario usuario, Usuario usuarioTarget, ObjectId id,
 			TipoAvalEnum tipo){
 		if(tipo.equals(TipoAvalEnum.CUALIDAD))
