@@ -43,6 +43,7 @@ public class InsigniasBeanTest extends AbstractTest {
 	@Autowired
 	private InsigniasFacade insigniasBean;
 	
+	private IdeaDTO dtoCompartida;
 	private IdeaDTO dto;
 	private Idea idea;
 	
@@ -50,12 +51,17 @@ public class InsigniasBeanTest extends AbstractTest {
 	public void setup(){
 		dto = new IdeaDTO()
 				.setUsuario("MinMiguelM")
+				.setCompartida(false)
+				.setTipo(TipoIdeaEnum.NU);
+		
+		dtoCompartida = new IdeaDTO()
+				.setUsuario("MinMiguelM")
 				.setCompartida(true)
 				.setTipo(TipoIdeaEnum.NU);
 		
 		idea = new Idea()
 				.setUsuario(usuarioRepository.findByUsernameIgnoreCase("minmiguelm"))
-				.setCompartida(true)
+				.setCompartida(false)
 				.setTipo(TipoIdeaEnum.NU);
 	}
 	
@@ -127,13 +133,13 @@ public class InsigniasBeanTest extends AbstractTest {
 	public void insigniasCompartirTest(){
 		Usuario usuario = usuarioRepository.findByUsernameIgnoreCase("minmiguelm");
 		int insignias = usuario.getInsignias().size();
-		insigniasBean.insigniasCompartir(dto);
+		insigniasBean.insigniasCompartir(dtoCompartida);
 		usuario = usuarioRepository.findByUsernameIgnoreCase("minmiguelm");
 		assertEquals(insignias + 1, usuario.getInsignias().size());
 		
 		usuario = usuarioRepository.findByUsernameIgnoreCase("minmiguelm");
 		insignias = usuario.getInsignias().size();
-		insigniasBean.insigniasCompartir(dto);
+		insigniasBean.insigniasCompartir(dtoCompartida);
 		usuario = usuarioRepository.findByUsernameIgnoreCase("minmiguelm");
 		assertEquals(insignias, usuario.getInsignias().size());
 	}
