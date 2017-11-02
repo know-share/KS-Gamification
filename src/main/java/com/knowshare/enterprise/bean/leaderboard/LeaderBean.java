@@ -108,6 +108,7 @@ public class LeaderBean implements LeaderFacade {
 				match(Criteria.where("carreras.$id").is(carrera)
 						.and("tipo").is(tipo)),
 				unwind("habilidades"),
+				sort(Direction.DESC,"habilidades.cantidad"),
 				group("username")
 					.first("habilidades.nombre").as("habilidad")
 					.first(NOMBRE).as(NOMBRE)
